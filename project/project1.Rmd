@@ -1,0 +1,123 @@
+---
+title: "Project_1_(Colleges)"
+author: "Samantha Fuentes"
+date: "10/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F,
+tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{R}
+institutions= read.csv("institutions.csv")
+retentionrates= read.csv("retention-rates.csv")
+```
+The two data sets chosen are about institutions and their retention rates. I chose these data sets because my sister is a junior in high school and asks me all the time what the best schools to applyy to are and why. A good reason I can come up with is the ability for them to retain their students from 2008 to 2016. The institution data set also has a lot of information on institutions such as their college websites and their locations. They can be joined through instituion names. 
+
+```{r}
+library(tidyr)
+library(dplyr)
+retentionrates %>% rename( "Fulltime_2016"= Full.time.retention.rate..2016..EF2016D., "Parttime_2016"= Part.time.retention.rate..2016..EF2016D., "Fulltime_2015"= Full.time.retention.rate..2015..EF2015D., "Parttime_2015"= Part.time.retention.rate..2015..EF2015D., "Fulltime_2014"=Full.time.retention.rate..2014..EF2014D., "Parttime_2014"= Part.time.retention.rate..2014..EF2014D., "Fulltime_2013"= Full.time.retention.rate..2013..EF2013D., "Parttime_2013"=Part.time.retention.rate..2013..EF2013D.,"Fulltime_2012"=Full.time.retention.rate..2012..EF2012D., "Parttime_2012"=Part.time.retention.rate..2012..EF2012D., "Fulltime_2011"=Full.time.retention.rate..2011..EF2011D., "Parttime_2011"=Part.time.retention.rate..2011..EF2011D., "Fulltime_2010"= Full.time.retention.rate..2010..EF2010D., "Parttime_2010"= Part.time.retention.rate..2010..EF2010D., "Fulltime_2009"= Full.time.retention.rate..2009..EF2009D., "Parttime_2009"= Part.time.retention.rate..2009..EF2009D., "Fulltime_2008"= Full.time.retention.rate..2008..EF2008D., "Parttime_2008"=Part.time.retention.rate..2008..EF2008D.) ->retentionrates
+retentionrates %>% pivot_longer(7:24) %>% separate(name, into=c("Time","Year")) %>% rename("Retention_Rate"= value)->retentionrates
+institutions %>% rename("TotalPercentAdmitted_2016"= Percent.admitted...total..DRVADM2016., "TotalStudents_2016"=Grand.total..EF2016..All.students..Undergraduate.total., "Men_2016"=Total.men..EF2016..All.students..Undergraduate.total., "Women_2016"=Total.women..EF2016..All.students..Undergraduate.total., "AmericanIndian/AlaskaNative_2016"= American.Indian.or.Alaska.Native.total..EF2016A..All.students..Undergraduate.total., "Asian_2016"= Asian.total..EF2016A..All.students..Undergraduate.total., "Black/AfricanAmerican_2016"= Black.or.African.American.total..EF2016A..All.students..Undergraduate.total., "Hispanic_2016"=Hispanic.total..EF2016A..All.students..Undergraduate.total., "NativeHawaiian/OtherPacificIslander_2016"= Native.Hawaiian.or.Other.Pacific.Islander.total..EF2016A..All.students..Undergraduate.total., "White_2016"=White.total..EF2016A..All.students..Undergraduate.total., "MorethanOne_2016"= Two.or.more.races.total..EF2016A..All.students..Undergraduate.total., "Unknown_2016"= Race.ethnicity.unknown.total..EF2016A..All.students..Undergraduate.total., "Nonresident/Alien_2016"=Nonresident.alien.total..EF2016A..All.students..Undergraduate.total.)->institutions
+institutions %>% select(-(11:15))->institutions
+institutions %>% pivot_longer(13:14)%>% separate(name, into=c("Gender","Year"))%>% rename("Total"= value)->institutions
+institutions  %>% pivot_longer(14:22) %>% separate(name, into = c("Race/Ethnicity", "Year"), sep = "_")%>% rename("GenderTotal"=Total, "Race/EthnicityTotal"=value)->institutions
+institutions %>% select(-13)->institutions
+```
+  In order to tidy the data, I took my two data sets and fixed each individually. I started by renaming the variables I was going to put in the same column with pivot_longer. After renaming, I placed retentionrates into time, year, and retention rate when originally it had each individual time and year as the same column and each year as retention rate as variables. For example one variable was titled "Full.time.retention.rate..2008..EF2008D." and I made sure the Full time had it's own column, retention rate has it's own column, and the year had it's own column. For institutions, I had the same problem and needed to rename the variables in order to pivot_longer. Each variable has an ethnicity, year, and total students with that same ethnicity enrolled in that specific school. I wanted a column specifically for ethnicity and total students in another. There was also another variable that was separated by gender and year and I wanted the gender to all be in one column and total to be in another.
+  This makes the data easier to read and will allow the merging of the two data sets by not only institution name but by year as well. I also deleted some data points that were confusing to read such as the variables historicall black college and tribal college had numbers  1 to 6 without a key as to which meant what and also there was a total amount of students twice so I deleted one of them. 
+```{r}
+institutions %>% full_join(retentionrates)->fulldata
+fulldata %>% pivot_wider(names_from="Gender",values_from="GenderTotal")
+na.omit(fulldata)->fulldata_NAomit
+```
+I used a full join for this data set because I wanted to keep the variables from both sets. This includes the retention rates and time of student from retentionrates data as well as the gender, ethnicity/race, and the percent admitted from institutions. I did omit the NAs in order to make summary statistics easier to work with as well as reducing the observations so it was neater. 
+```{r}
+fulldata %>% group_by(Institution.Name, Year) %>% summarize(mean_retention=mean(Retention_Rate,na.rm=T), sd_retention=sd(Retention_Rate, na.rm=T))
+#This is showing the mean and standard deviation of the retention rate based on year and insitution
+fulldata_NAomit %>% group_by(City.location.of.institution..HD2016., Gender) %>% summarize(mean_gender=mean(GenderTotal, na.rm = T), sd_gender=sd(GenderTotal, na.rm = T))
+#The mean and standard deviation of gender total in an institution based on the city and gender 
+fulldata_NAomit %>% filter(Time=="Fulltime")  %>% arrange(City.location.of.institution..HD2016., State.abbreviation..HD2016., ZIP.code..HD2016.) %>% mutate(Students_Retained = (TotalStudents_2016*Retention_Rate))
+#Finding the amount of the total students is retained every year
+fulldata %>% group_by(Time, City.location.of.institution..HD2016., Institution.Name) %>% summarize(Max_RetentionRate=max(Retention_Rate, na.rm = T))
+#Finding the max retention rate by city and institution 
+fulldata_NAomit %>% group_by(Institution.Name, City.location.of.institution..HD2016.) %>% summarize(count=n()) 
+#Finding the number of observations of the institutions per city
+fulldata %>% summarize_if(is.numeric,mean, na.rm=T) %>% select(-(1:3))
+#the means of total percent admitted, total students, gender total, race/ethnicity total, and retention rate
+fulldata_NAomit %>% summarize_if(is.numeric, list(min=min, max=max))
+#the max and min institutions based off of lowest and highest of each variable that is numerical
+fulldata_NAomit%>%summarize(cor(Retention_Rate, TotalPercentAdmitted_2016, use="pair"))
+#finding if there is a correlation between retention rate and total percent admitted
+fulldata_NAomit %>% group_by(`Race/Ethnicity`, State.abbreviation..HD2016.) %>% summarize(mean_race=mean(`Race/EthnicityTotal`)) %>% arrange(desc(mean_race))
+#determining the mean race of the different race/ethnicity based on the states they are located in
+fulldata_NAomit %>% group_by(ZIP.code..HD2016.) %>% summarize(min_percentadmitted=min(TotalPercentAdmitted_2016)) %>% arrange(desc(min_percentadmitted))
+#the minimum percent admited based on zip code
+fulldata_NAomit%>%summarize(cor(TotalStudents_2016, TotalPercentAdmitted_2016, use="pair"))
+#finding the correlation between the total students and the total percent admitted
+```
+  The summary statistics I chose to do were based on finding the maximum, minimum, standard deviation, mean, correlations and the number of observations in each variable. The data I found was that the mean of retention throughout the years fluctuated mainly increasing between 2013 and 2014. The standard deviation seems to be low until the retention rate dramaticall increases or decreases. As for the mean of gender based on the city it seems more women are accepted on average over men, but the standard deviation is really high so it may not be very accurate. When looking at full time students, there seems to be a high max retention rate in many colleges, with som exceptions like University of Maryland- University College having 43 percent retention rate as it's max.
+  When you group by city and institution, the observations seem to vary between 18 and 36, probably because there are not that many institutions in every city. Ii also found the means of each numeric variable, showing the average amount of students in the dataset was around 4,500 and the retention rate was around 59%. The minimum retention was 0 and the max was 100 in the dataset. There was no obvious correlation between retention rate and total percent admitted or between total student and total percent admitted. The highest race admitted was white and the least was Native Hawaiian or other pacific islander. Based on the minimum percent admitted, it seems the minimum is 64 and the highest is 100% based on zip code. 
+  
+```{r}
+library(ggplot2)
+library(tibble)
+fulldata_NAomit %>% select(GenderTotal, `Race/EthnicityTotal`, Retention_Rate, TotalPercentAdmitted_2016, TotalStudents_2016)-> numericfulldata
+numericfulldata%>%select_if(is.numeric)%>%cor%>%as.data.frame%>%  rownames_to_column%>% pivot_longer(-1)%>%  ggplot(aes(rowname,name,fill=value))+geom_tile()+  geom_text(aes(label=round(value,2))) + xlab("")+ylab("")+coord_fixed()+  scale_fill_gradient2(low="purple",mid="yellow",high="blue") + theme(axis.text.x = element_text(angle = 90, vjust = 0.5,
+hjust=1))
+```
+ In this correlation heat map, it seems most of my numeric variables do not have a correlation. It seems as if the total students admitted in 2016 has a correlation with the Gender Total in 2016. This is the highest correlation. The next two are Race/Ethnicity total and Gender total as well as Race/Etthnicity total and the total students admitted in 2016. After this there is no strong correlation between the numeric variables. 
+ 
+```{r}
+fulldata_NAomit %>% mutate_if(is.integer, as.numeric)-> fulldata_integernumeric
+ggplot(fulldata_integernumeric, aes(x = State.abbreviation..HD2016., y = Retention_Rate, fill= Time))+  geom_bar(stat="summary", position="dodge")+ geom_errorbar(stat="summary",position="dodge")+ theme(axis.text.x = element_text(angle=90, hjust=1)) +ggtitle("Retention Rate of Fulltime/Parttime Students by State") + xlab("States of Universities") + ylab("Retention Rate (%)")
+```
+ This bar graph shows the states where the universities are located and their retention rates based on whether the student is parttime or fulltime. Based on the graph, it seems as if fulltime retention is higher than parttime retention in every states. It shows that District of Columbia has the highest retention rate of full time students and Arkansas has the lowest retention rate of fulltime students. Iowa has the highest retention rate of part time students and South Carolina has the lowest retention rate of fulltime students.
+ 
+ 
+```{r}
+ggplot(fulldata_integernumeric, aes(GenderTotal, TotalPercentAdmitted_2016, color= Gender)) + geom_point(size= 3)+ scale_x_continuous(name="Gender Total", limits=c(0, 40000)) +
+  scale_y_continuous(name="Percent Admitted (%)", breaks =c(0,10,20,30,40,50,60,70,80,90,100)) +ggtitle("Percent Admitted to Universities Based on Gender") +scale_color_brewer(palette="Accent")
+```
+ 
+ 
+  This scatterplot shows the percent admitted to universities based on gender. The graph shows that the majority of people that are accepted into the universities in this data set are women. This is actually really intersting since normally it is thought that men are most accepted. Also the percent admitted ranges from close to 0 to 100, showing the data took a wide range. 
+
+
+
+```{r}
+library(cluster)
+first1000 <- numericfulldata %>% slice(1:1000)
+sil_width<-vector()
+for(i in 2:10){    
+kms <- kmeans(first1000,centers=i) 
+sil <- silhouette(kms$cluster,dist(first1000)) 
+sil_width[i]<-mean(sil[,3]) 
+}
+ggplot()+geom_line(aes(x=1:10,y=sil_width))+scale_x_continuous(name="k",breaks=1:10)
+pam1 <- first1000 %>% pam(k=2)
+pam1
+pam1$silinfo$avg.width
+plot(pam1,which=2)
+pamclust<- first1000 %>% mutate(cluster= as.factor(pam1$clustering))
+library(GGally)
+ggpairs(pamclust, columns = 1:6, aes(color= cluster))
+```
+
+When determining the best number of clusters, it seems like it was when k=2. I also had to make the data only 1,000 observations because it was too big and it was crashing the server. The average silhouette width is 0.61 so the final fit is reasonable. The variables with the strongest correlation are gender total and total students from 2016. Percent admitted has a negative correlation with all the variables. 
+
+
+
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Samantha Fuentes" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico">
+    <title>Project_1_(Colleges)</title>
+    <meta name="generator" content="Hugo 0.79.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../../post/">BLOG</a></li>
+        
+        <li><a href="../../projects/">PROJECTS</a></li>
+        
+        <li><a href="../../resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../../project/project1/">Project_1_(Colleges)</a></strong>
+          </h3>
+        </div>
+ 
+<div class="blog-title">
+          <h4>
+         January 1, 0001 
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+<pre class="r"><code>institutions = read.csv(&quot;institutions.csv&quot;)
+retentionrates = read.csv(&quot;retention-rates.csv&quot;)</code></pre>
+<p>The two data sets chosen are about institutions and their retention rates. I chose these data sets because my sister is a junior in high school and asks me all the time what the best schools to applyy to are and why. A good reason I can come up with is the ability for them to retain their students from 2008 to 2016. The institution data set also has a lot of information on institutions such as their college websites and their locations. They can be joined through instituion names.</p>
+<pre class="r"><code>library(tidyr)
+library(dplyr)
+retentionrates &lt;- retentionrates %&gt;% rename(Fulltime_2016 = Full.time.retention.rate..2016..EF2016D., 
+    Parttime_2016 = Part.time.retention.rate..2016..EF2016D., 
+    Fulltime_2015 = Full.time.retention.rate..2015..EF2015D., 
+    Parttime_2015 = Part.time.retention.rate..2015..EF2015D., 
+    Fulltime_2014 = Full.time.retention.rate..2014..EF2014D., 
+    Parttime_2014 = Part.time.retention.rate..2014..EF2014D., 
+    Fulltime_2013 = Full.time.retention.rate..2013..EF2013D., 
+    Parttime_2013 = Part.time.retention.rate..2013..EF2013D., 
+    Fulltime_2012 = Full.time.retention.rate..2012..EF2012D., 
+    Parttime_2012 = Part.time.retention.rate..2012..EF2012D., 
+    Fulltime_2011 = Full.time.retention.rate..2011..EF2011D., 
+    Parttime_2011 = Part.time.retention.rate..2011..EF2011D., 
+    Fulltime_2010 = Full.time.retention.rate..2010..EF2010D., 
+    Parttime_2010 = Part.time.retention.rate..2010..EF2010D., 
+    Fulltime_2009 = Full.time.retention.rate..2009..EF2009D., 
+    Parttime_2009 = Part.time.retention.rate..2009..EF2009D., 
+    Fulltime_2008 = Full.time.retention.rate..2008..EF2008D., 
+    Parttime_2008 = Part.time.retention.rate..2008..EF2008D.)
+retentionrates &lt;- retentionrates %&gt;% pivot_longer(7:24) %&gt;% separate(name, 
+    into = c(&quot;Time&quot;, &quot;Year&quot;)) %&gt;% rename(Retention_Rate = value)
+institutions &lt;- institutions %&gt;% rename(TotalPercentAdmitted_2016 = Percent.admitted...total..DRVADM2016., 
+    TotalStudents_2016 = Grand.total..EF2016..All.students..Undergraduate.total., 
+    Men_2016 = Total.men..EF2016..All.students..Undergraduate.total., 
+    Women_2016 = Total.women..EF2016..All.students..Undergraduate.total., 
+    `AmericanIndian/AlaskaNative_2016` = American.Indian.or.Alaska.Native.total..EF2016A..All.students..Undergraduate.total., 
+    Asian_2016 = Asian.total..EF2016A..All.students..Undergraduate.total., 
+    `Black/AfricanAmerican_2016` = Black.or.African.American.total..EF2016A..All.students..Undergraduate.total., 
+    Hispanic_2016 = Hispanic.total..EF2016A..All.students..Undergraduate.total., 
+    `NativeHawaiian/OtherPacificIslander_2016` = Native.Hawaiian.or.Other.Pacific.Islander.total..EF2016A..All.students..Undergraduate.total., 
+    White_2016 = White.total..EF2016A..All.students..Undergraduate.total., 
+    MorethanOne_2016 = Two.or.more.races.total..EF2016A..All.students..Undergraduate.total., 
+    Unknown_2016 = Race.ethnicity.unknown.total..EF2016A..All.students..Undergraduate.total., 
+    `Nonresident/Alien_2016` = Nonresident.alien.total..EF2016A..All.students..Undergraduate.total.)
+institutions &lt;- institutions %&gt;% select(-(11:15))
+institutions &lt;- institutions %&gt;% pivot_longer(13:14) %&gt;% separate(name, 
+    into = c(&quot;Gender&quot;, &quot;Year&quot;)) %&gt;% rename(Total = value)
+institutions &lt;- institutions %&gt;% pivot_longer(14:22) %&gt;% separate(name, 
+    into = c(&quot;Race/Ethnicity&quot;, &quot;Year&quot;), sep = &quot;_&quot;) %&gt;% rename(GenderTotal = Total, 
+    `Race/EthnicityTotal` = value)
+institutions &lt;- institutions %&gt;% select(-13)</code></pre>
+<p>In order to tidy the data, I took my two data sets and fixed each individually. I started by renaming the variables I was going to put in the same column with pivot_longer. After renaming, I placed retentionrates into time, year, and retention rate when originally it had each individual time and year as the same column and each year as retention rate as variables. For example one variable was titled &quot;Full.time.retention.rate..2008..EF2008D.&quot; and I made sure the Full time had it's own column, retention rate has it's own column, and the year had it's own column. For institutions, I had the same problem and needed to rename the variables in order to pivot_longer. Each variable has an ethnicity, year, and total students with that same ethnicity enrolled in that specific school. I wanted a column specifically for ethnicity and total students in another. There was also another variable that was separated by gender and year and I wanted the gender to all be in one column and total to be in another. This makes the data easier to read and will allow the merging of the two data sets by not only institution name but by year as well. I also deleted some data points that were confusing to read such as the variables historicall black college and tribal college had numbers 1 to 6 without a key as to which meant what and also there was a total amount of students twice so I deleted one of them.</p>
+<pre class="r"><code>fulldata &lt;- institutions %&gt;% full_join(retentionrates)
+fulldata %&gt;% pivot_wider(names_from = &quot;Gender&quot;, values_from = &quot;GenderTotal&quot;)</code></pre>
+<pre><code>## # A tibble: 130,662 x 20
+##    UnitID Institution.Name Institution.nam… Street.address.… City.location.o…
+##     &lt;int&gt; &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;           
+##  1 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  2 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  3 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  4 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  5 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  6 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  7 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  8 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+##  9 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+## 10 180203 Aaniiih Nakoda … &quot; &quot;              269 Blackfeet A… Harlem          
+## # … with 130,652 more rows, and 15 more variables:
+## #   State.abbreviation..HD2016. &lt;fct&gt;, ZIP.code..HD2016. &lt;fct&gt;,
+## #   Institution.s.internet.website.address..HD2016. &lt;fct&gt;,
+## #   Longitude.location.of.institution..HD2016. &lt;dbl&gt;,
+## #   Latitude.location.of.institution..HD2016. &lt;dbl&gt;,
+## #   TotalPercentAdmitted_2016 &lt;int&gt;, TotalStudents_2016 &lt;int&gt;,
+## #   `Race/EthnicityTotal` &lt;int&gt;, `Race/Ethnicity` &lt;chr&gt;, Year &lt;chr&gt;,
+## #   Time &lt;chr&gt;, Retention_Rate &lt;int&gt;, Men &lt;int&gt;, Women &lt;int&gt;, `NA` &lt;int&gt;</code></pre>
+<pre class="r"><code>fulldata_NAomit &lt;- na.omit(fulldata)</code></pre>
+<p>I used a full join for this data set because I wanted to keep the variables from both sets. This includes the retention rates and time of student from retentionrates data as well as the gender, ethnicity/race, and the percent admitted from institutions. I did omit the NAs in order to make summary statistics easier to work with as well as reducing the observations so it was neater.</p>
+<pre class="r"><code>fulldata %&gt;% group_by(Institution.Name, Year) %&gt;% summarize(mean_retention = mean(Retention_Rate, 
+    na.rm = T), sd_retention = sd(Retention_Rate, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 34,209 x 4
+## # Groups:   Institution.Name [3,801]
+##    Institution.Name             Year  mean_retention sd_retention
+##    &lt;fct&gt;                        &lt;chr&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+##  1 Aaniiih Nakoda College       2008            53.5         4.95
+##  2 Aaniiih Nakoda College       2009            48          NA   
+##  3 Aaniiih Nakoda College       2010            50          NA   
+##  4 Aaniiih Nakoda College       2011            62.5         3.54
+##  5 Aaniiih Nakoda College       2012            76          33.9 
+##  6 Aaniiih Nakoda College       2013            60.5         9.19
+##  7 Aaniiih Nakoda College       2014            21          29.7 
+##  8 Aaniiih Nakoda College       2015            24          33.9 
+##  9 Aaniiih Nakoda College       2016            81.5        18.8 
+## 10 Abilene Christian University 2008            71           5.66
+## # … with 34,199 more rows</code></pre>
+<pre class="r"><code># This is showing the mean and standard deviation of the
+# retention rate based on year and insitution
+fulldata_NAomit %&gt;% group_by(City.location.of.institution..HD2016., 
+    Gender) %&gt;% summarize(mean_gender = mean(GenderTotal, na.rm = T), 
+    sd_gender = sd(GenderTotal, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 2,030 x 4
+## # Groups:   City.location.of.institution..HD2016. [1,015]
+##    City.location.of.institution..HD2016. Gender mean_gender sd_gender
+##    &lt;fct&gt;                                 &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Aberdeen                              Men           812      521. 
+##  2 Aberdeen                              Women        1136      622. 
+##  3 Abilene                               Men          1121.     447. 
+##  4 Abilene                               Women        1453      777. 
+##  5 Abington                              Men          1864        0  
+##  6 Abington                              Women        2086        0  
+##  7 Ada                                   Men          1372.      79.7
+##  8 Ada                                   Women        1675      477. 
+##  9 Addison                               Men          1519        0  
+## 10 Addison                               Women       14345        0  
+## # … with 2,020 more rows</code></pre>
+<pre class="r"><code># The mean and standard deviation of gender total in an
+# institution based on the city and gender
+fulldata_NAomit %&gt;% filter(Time == &quot;Fulltime&quot;) %&gt;% arrange(City.location.of.institution..HD2016., 
+    State.abbreviation..HD2016., ZIP.code..HD2016.) %&gt;% mutate(Students_Retained = (TotalStudents_2016 * 
+    Retention_Rate))</code></pre>
+<pre><code>## # A tibble: 32,148 x 20
+##    UnitID Institution.Name Institution.nam… Street.address.… City.location.o…
+##     &lt;int&gt; &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;            &lt;fct&gt;           
+##  1 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  2 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  3 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  4 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  5 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  6 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  7 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  8 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+##  9 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+## 10 219295 Presentation Co… &quot; &quot;              1500 N Main      Aberdeen        
+## # … with 32,138 more rows, and 15 more variables:
+## #   State.abbreviation..HD2016. &lt;fct&gt;, ZIP.code..HD2016. &lt;fct&gt;,
+## #   Institution.s.internet.website.address..HD2016. &lt;fct&gt;,
+## #   Longitude.location.of.institution..HD2016. &lt;dbl&gt;,
+## #   Latitude.location.of.institution..HD2016. &lt;dbl&gt;,
+## #   TotalPercentAdmitted_2016 &lt;int&gt;, TotalStudents_2016 &lt;int&gt;, Gender &lt;chr&gt;,
+## #   GenderTotal &lt;int&gt;, `Race/EthnicityTotal` &lt;int&gt;, `Race/Ethnicity` &lt;chr&gt;,
+## #   Year &lt;chr&gt;, Time &lt;chr&gt;, Retention_Rate &lt;int&gt;, Students_Retained &lt;int&gt;</code></pre>
+<pre class="r"><code># Finding the amount of the total students is retained every
+# year
+fulldata %&gt;% group_by(Time, City.location.of.institution..HD2016., 
+    Institution.Name) %&gt;% summarize(Max_RetentionRate = max(Retention_Rate, 
+    na.rm = T))</code></pre>
+<pre><code>## # A tibble: 7,678 x 4
+## # Groups:   Time, City.location.of.institution..HD2016. [3,564]
+##    Time    City.location.of.institu… Institution.Name           Max_RetentionRa…
+##    &lt;chr&gt;   &lt;fct&gt;                     &lt;fct&gt;                                 &lt;dbl&gt;
+##  1 Fullti… &quot;&quot;                        Advanced College-Stockton              -Inf
+##  2 Fullti… &quot;&quot;                        America Evangelical Unive…             -Inf
+##  3 Fullti… &quot;&quot;                        Bais Medrash Mayan Hatorah             -Inf
+##  4 Fullti… &quot;&quot;                        Bolivar Technical College              -Inf
+##  5 Fullti… &quot;&quot;                        California Institute of A…             -Inf
+##  6 Fullti… &quot;&quot;                        Career Quest Learning Cen…             -Inf
+##  7 Fullti… &quot;&quot;                        Elyon College                          -Inf
+##  8 Fullti… &quot;&quot;                        Fortis College-Cutler Bay              -Inf
+##  9 Fullti… &quot;&quot;                        Galen College of Nursing-…             -Inf
+## 10 Fullti… &quot;&quot;                        Gwinnett Institute                     -Inf
+## # … with 7,668 more rows</code></pre>
+<pre class="r"><code># Finding the max retention rate by city and institution
+fulldata_NAomit %&gt;% group_by(Institution.Name, City.location.of.institution..HD2016.) %&gt;% 
+    summarize(count = n())</code></pre>
+<pre><code>## # A tibble: 1,791 x 3
+## # Groups:   Institution.Name [1,778]
+##    Institution.Name                            City.location.of.instituti… count
+##    &lt;fct&gt;                                       &lt;fct&gt;                       &lt;int&gt;
+##  1 Abilene Christian University                Abilene                        36
+##  2 Abraham Baldwin Agricultural College        Tifton                         36
+##  3 Adams State University                      Alamosa                        36
+##  4 Adelphi University                          Garden City                    36
+##  5 Adrian College                              Adrian                         18
+##  6 Advanced Technology Institute               Virginia Beach                 18
+##  7 Adventist University of Health Sciences     Orlando                        36
+##  8 Advertising Art Educational Services DBA S… Kettering                      18
+##  9 Agnes Scott College                         Decatur                        36
+## 10 Alabama A &amp; M University                    Normal                         36
+## # … with 1,781 more rows</code></pre>
+<pre class="r"><code># Finding the number of observations of the institutions per
+# city
+fulldata %&gt;% summarize_if(is.numeric, mean, na.rm = T) %&gt;% select(-(1:3))</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   TotalPercentAdmi… TotalStudents_2… GenderTotal `Race/Ethnicity… Retention_Rate
+##               &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+## 1              66.6            4384.       2192.             487.           58.8</code></pre>
+<pre class="r"><code># the means of total percent admitted, total students, gender
+# total, race/ethnicity total, and retention rate
+fulldata_NAomit %&gt;% summarize_if(is.numeric, list(min = min, 
+    max = max))</code></pre>
+<pre><code>## # A tibble: 1 x 16
+##   UnitID_min Longitude.locat… Latitude.locati… TotalPercentAdm… TotalStudents_2…
+##        &lt;int&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;int&gt;            &lt;int&gt;
+## 1     100654            -158.             19.7                0                6
+## # … with 11 more variables: GenderTotal_min &lt;int&gt;,
+## #   `Race/EthnicityTotal_min` &lt;int&gt;, Retention_Rate_min &lt;int&gt;,
+## #   UnitID_max &lt;int&gt;, Longitude.location.of.institution..HD2016._max &lt;dbl&gt;,
+## #   Latitude.location.of.institution..HD2016._max &lt;dbl&gt;,
+## #   TotalPercentAdmitted_2016_max &lt;int&gt;, TotalStudents_2016_max &lt;int&gt;,
+## #   GenderTotal_max &lt;int&gt;, `Race/EthnicityTotal_max` &lt;int&gt;,
+## #   Retention_Rate_max &lt;int&gt;</code></pre>
+<pre class="r"><code># the max and min institutions based off of lowest and
+# highest of each variable that is numerical
+fulldata_NAomit %&gt;% summarize(cor(Retention_Rate, TotalPercentAdmitted_2016, 
+    use = &quot;pair&quot;))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `cor(Retention_Rate, TotalPercentAdmitted_2016, use = &quot;pair&quot;)`
+##                                                            &lt;dbl&gt;
+## 1                                                         -0.114</code></pre>
+<pre class="r"><code># finding if there is a correlation between retention rate
+# and total percent admitted
+fulldata_NAomit %&gt;% group_by(`Race/Ethnicity`, State.abbreviation..HD2016.) %&gt;% 
+    summarize(mean_race = mean(`Race/EthnicityTotal`)) %&gt;% arrange(desc(mean_race))</code></pre>
+<pre><code>## # A tibble: 459 x 3
+## # Groups:   Race/Ethnicity [9]
+##    `Race/Ethnicity` State.abbreviation..HD2016. mean_race
+##    &lt;chr&gt;            &lt;fct&gt;                           &lt;dbl&gt;
+##  1 White            UT                             11727.
+##  2 White            ID                              7906.
+##  3 White            AZ                              7454.
+##  4 White            WY                              7176 
+##  5 White            CO                              4923.
+##  6 White            MI                              4715.
+##  7 White            NH                              4686.
+##  8 White            KY                              4587.
+##  9 White            IN                              4352.
+## 10 White            WI                              4302.
+## # … with 449 more rows</code></pre>
+<pre class="r"><code># determining the mean race of the different race/ethnicity
+# based on the states they are located in
+fulldata_NAomit %&gt;% group_by(ZIP.code..HD2016.) %&gt;% summarize(min_percentadmitted = min(TotalPercentAdmitted_2016)) %&gt;% 
+    arrange(desc(min_percentadmitted))</code></pre>
+<pre><code>## # A tibble: 1,743 x 2
+##    ZIP.code..HD2016. min_percentadmitted
+##    &lt;fct&gt;                           &lt;int&gt;
+##  1 10950                             100
+##  2 10960-3698                        100
+##  3 12204                             100
+##  4 14485-9704                        100
+##  5 16101                             100
+##  6 16335                             100
+##  7 19096                             100
+##  8 19122                             100
+##  9 27560-0000                        100
+## 10 3054                              100
+## # … with 1,733 more rows</code></pre>
+<pre class="r"><code># the minimum percent admited based on zip code
+fulldata_NAomit %&gt;% summarize(cor(TotalStudents_2016, TotalPercentAdmitted_2016, 
+    use = &quot;pair&quot;))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `cor(TotalStudents_2016, TotalPercentAdmitted_2016, use = &quot;pair&quot;)`
+##                                                                &lt;dbl&gt;
+## 1                                                            -0.0663</code></pre>
+<pre class="r"><code># finding the correlation between the total students and the
+# total percent admitted</code></pre>
+<p>The summary statistics I chose to do were based on finding the maximum, minimum, standard deviation, mean, correlations and the number of observations in each variable. The data I found was that the mean of retention throughout the years fluctuated mainly increasing between 2013 and 2014. The standard deviation seems to be low until the retention rate dramaticall increases or decreases. As for the mean of gender based on the city it seems more women are accepted on average over men, but the standard deviation is really high so it may not be very accurate. When looking at full time students, there seems to be a high max retention rate in many colleges, with som exceptions like University of Maryland- University College having 43 percent retention rate as it's max. When you group by city and institution, the observations seem to vary between 18 and 36, probably because there are not that many institutions in every city. Ii also found the means of each numeric variable, showing the average amount of students in the dataset was around 4,500 and the retention rate was around 59%. The minimum retention was 0 and the max was 100 in the dataset. There was no obvious correlation between retention rate and total percent admitted or between total student and total percent admitted. The highest race admitted was white and the least was Native Hawaiian or other pacific islander. Based on the minimum percent admitted, it seems the minimum is 64 and the highest is 100% based on zip code.</p>
+<pre class="r"><code>library(ggplot2)
+library(tibble)
+numericfulldata &lt;- fulldata_NAomit %&gt;% select(GenderTotal, `Race/EthnicityTotal`, 
+    Retention_Rate, TotalPercentAdmitted_2016, TotalStudents_2016)
+numericfulldata %&gt;% select_if(is.numeric) %&gt;% cor %&gt;% as.data.frame %&gt;% 
+    rownames_to_column %&gt;% pivot_longer(-1) %&gt;% ggplot(aes(rowname, 
+    name, fill = value)) + geom_tile() + geom_text(aes(label = round(value, 
+    2))) + xlab(&quot;&quot;) + ylab(&quot;&quot;) + coord_fixed() + scale_fill_gradient2(low = &quot;purple&quot;, 
+    mid = &quot;yellow&quot;, high = &quot;blue&quot;) + theme(axis.text.x = element_text(angle = 90, 
+    vjust = 0.5, hjust = 1))</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /> In this correlation heat map, it seems most of my numeric variables do not have a correlation. It seems as if the total students admitted in 2016 has a correlation with the Gender Total in 2016. This is the highest correlation. The next two are Race/Ethnicity total and Gender total as well as Race/Etthnicity total and the total students admitted in 2016. After this there is no strong correlation between the numeric variables.</p>
+<pre class="r"><code>fulldata_integernumeric &lt;- fulldata_NAomit %&gt;% mutate_if(is.integer, 
+    as.numeric)
+ggplot(fulldata_integernumeric, aes(x = State.abbreviation..HD2016., 
+    y = Retention_Rate, fill = Time)) + geom_bar(stat = &quot;summary&quot;, 
+    position = &quot;dodge&quot;) + geom_errorbar(stat = &quot;summary&quot;, position = &quot;dodge&quot;) + 
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+    ggtitle(&quot;Retention Rate of Fulltime/Parttime Students by State&quot;) + 
+    xlab(&quot;States of Universities&quot;) + ylab(&quot;Retention Rate (%)&quot;)</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /> This bar graph shows the states where the universities are located and their retention rates based on whether the student is parttime or fulltime. Based on the graph, it seems as if fulltime retention is higher than parttime retention in every states. It shows that District of Columbia has the highest retention rate of full time students and Arkansas has the lowest retention rate of fulltime students. Iowa has the highest retention rate of part time students and South Carolina has the lowest retention rate of fulltime students.</p>
+<pre class="r"><code>ggplot(fulldata_integernumeric, aes(GenderTotal, TotalPercentAdmitted_2016, 
+    color = Gender)) + geom_point(size = 3) + scale_x_continuous(name = &quot;Gender Total&quot;, 
+    limits = c(0, 40000)) + scale_y_continuous(name = &quot;Percent Admitted (%)&quot;, 
+    breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)) + 
+    ggtitle(&quot;Percent Admitted to Universities Based on Gender&quot;) + 
+    scale_color_brewer(palette = &quot;Accent&quot;)</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>This scatterplot shows the percent admitted to universities based on gender. The graph shows that the majority of people that are accepted into the universities in this data set are women. This is actually really intersting since normally it is thought that men are most accepted. Also the percent admitted ranges from close to 0 to 100, showing the data took a wide range.</p>
+<pre class="r"><code>library(cluster)
+first1000 &lt;- numericfulldata %&gt;% slice(1:1000)
+sil_width &lt;- vector()
+for (i in 2:10) {
+    kms &lt;- kmeans(first1000, centers = i)
+    sil &lt;- silhouette(kms$cluster, dist(first1000))
+    sil_width[i] &lt;- mean(sil[, 3])
+}
+ggplot() + geom_line(aes(x = 1:10, y = sil_width)) + scale_x_continuous(name = &quot;k&quot;, 
+    breaks = 1:10)</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pam1 &lt;- first1000 %&gt;% pam(k = 2)
+pam1</code></pre>
+<pre><code>## Medoids:
+##       ID GenderTotal Race/EthnicityTotal Retention_Rate
+## [1,] 283        2101                 200             58
+## [2,] 436         679                  94             82
+##      TotalPercentAdmitted_2016 TotalStudents_2016
+## [1,]                        87               4851
+## [2,]                        72               1418
+## Clustering vector:
+##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2
+##  [75] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+##  [ reached getOption(&quot;max.print&quot;) -- omitted 900 entries ]
+## Objective function:
+##    build     swap 
+## 1121.347 1078.116 
+## 
+## Available components:
+##  [1] &quot;medoids&quot;    &quot;id.med&quot;     &quot;clustering&quot; &quot;objective&quot;  &quot;isolation&quot; 
+##  [6] &quot;clusinfo&quot;   &quot;silinfo&quot;    &quot;diss&quot;       &quot;call&quot;       &quot;data&quot;</code></pre>
+<pre class="r"><code>pam1$silinfo$avg.width</code></pre>
+<pre><code>## [1] 0.6098978</code></pre>
+<pre class="r"><code>plot(pam1, which = 2)</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pamclust &lt;- first1000 %&gt;% mutate(cluster = as.factor(pam1$clustering))
+library(GGally)
+ggpairs(pamclust, columns = 1:6, aes(color = cluster))</code></pre>
+<p><img src="../../project/project1_files/figure-html/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>When determining the best number of clusters, it seems like it was when k=2. I also had to make the data only 1,000 observations because it was too big and it was crashing the server. The average silhouette width is 0.61 so the final fit is reasonable. The variables with the strongest correlation are gender total and total students from 2016. Percent admitted has a negative correlation with all the variables.</p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</div>
+
+            
+        <hr>         <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div> 
+            </div>
+          </div>
+
+   <hr>  <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+        </div>
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../../js/docs.min.js"></script>
+<script src="../../js/main.js"></script>
+
+<script src="../../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

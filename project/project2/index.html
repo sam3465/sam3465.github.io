@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Samantha Fuentes" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico">
+    <title>Project2</title>
+    <meta name="generator" content="Hugo 0.79.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../../post/">BLOG</a></li>
+        
+        <li><a href="../../projects/">PROJECTS</a></li>
+        
+        <li><a href="../../resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../../project/project2/">Project2</a></strong>
+          </h3>
+        </div>
+ 
+<div class="blog-title">
+          <h4>
+         January 1, 0001 
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+<pre class="r"><code>library(car)
+head(KosteckiDillon)</code></pre>
+<pre><code>##   id time dos hatype age airq medication headache    sex
+## 1  1  -11 753   Aura  30    9 continuing      yes female
+## 2  1  -10 754   Aura  30    7 continuing      yes female
+## 3  1   -9 755   Aura  30   10 continuing      yes female
+## 4  1   -8 756   Aura  30   13 continuing      yes female
+## 5  1   -7 757   Aura  30   18 continuing      yes female
+## 6  1   -6 758   Aura  30   19 continuing      yes female</code></pre>
+<p>This dataset determines the treatment of migraine headaches and if they work. I got this dataset from the cars package because I am interested in the pharmaceutical companies and how they test if their treatments work. This research was done by Tammy Kostecki-Dillon. The variables are patient ID, time on treatment, days from the start of the study, if the migrane hahs an Aura mix or not, the age when treatment started, the airquality, the medication, and if there was a headache while on the medication, and the sex of the patient. There are 4,152 observations.</p>
+<pre class="r"><code>man1&lt;-manova(cbind(time,dos, age, airq)~headache, data=KosteckiDillon)
+summary(man1)</code></pre>
+<pre><code>## Df Pillai approx F num Df den Df Pr(&gt;F)
+## headache 1 0.0054072 5.6364 4 4147 0.0001601 ***
+## Residuals 4150
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>summary.aov(man1)</code></pre>
+<pre><code>## Response time :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## headache 1 2836 2835.52 6.0083 0.01428 *
+## Residuals 4150 1958538 471.94
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response dos :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## headache 1 12301 12301 0.1091 0.7412
+## Residuals 4150 467977979 112766
+##
+## Response age :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## headache 1 1810 1810.13 14.474 0.0001442 ***
+## Residuals 4150 519007 125.06
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response airq :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## headache 1 77 77.455 0.8556 0.355
+## Residuals 4150 375677 90.525</code></pre>
+<pre class="r"><code>KosteckiDillon%&gt;%group_by(headache)%&gt;%summarize(mean(time),mean(dos), mean(age), mean(airq))</code></pre>
+<pre><code>## # A tibble: 2 x 5
+## headache `mean(time)` `mean(dos)` `mean(age)`
+`mean(airq)`
+## &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 no 16.6 649.  43.2 24.6
+## 2 yes 14.8 645.  41.9 24.9</code></pre>
+<pre class="r"><code>pairwise.t.test(KosteckiDillon$time,KosteckiDillon$headache, p.adj=&quot;none&quot;) </code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  KosteckiDillon$time and KosteckiDillon$headache 
+## 
+##     no   
+## yes 0.014
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(KosteckiDillon$dos,KosteckiDillon$headache, p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  KosteckiDillon$dos and KosteckiDillon$headache 
+## 
+##     no  
+## yes 0.74
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(KosteckiDillon$age,KosteckiDillon$headache, p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  KosteckiDillon$age and KosteckiDillon$headache 
+## 
+##     no     
+## yes 0.00014
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(KosteckiDillon$airq,KosteckiDillon$headache, p.adj=&quot;none&quot;)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  KosteckiDillon$airq and KosteckiDillon$headache 
+## 
+##     no  
+## yes 0.36
+## 
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>1 - 0.95^9</code></pre>
+<pre><code>## [1] 0.3697506</code></pre>
+<pre class="r"><code>.05/9</code></pre>
+<pre><code>## [1] 0.005555556</code></pre>
+<pre class="r"><code>library(rstatix)
+
+group &lt;- KosteckiDillon$headache 
+DVs &lt;- KosteckiDillon %&gt;% select(time,dos, age, airq)
+
+#Test multivariate normality for each group (null: assumption met)
+sapply(split(DVs,group), mshapiro_test)</code></pre>
+<pre><code>##           no           yes         
+## statistic 0.9739862    0.9576896   
+## p.value   9.636261e-16 3.530539e-27</code></pre>
+<pre class="r"><code>#If any p&lt;.05, stop. If not, test homogeneity of covariance matrices</code></pre>
+<p>The MANOVA test showed there was a significant difference between time, dos, age, and air quality. ANOVA showed there was a significant mean difference across time and age. The post hoc t-tests showed time and age again were significantly different. There were 9 tests performed, thus meaning the type I error was 0.3698. The bonferroni correction was 0.00556. This correction only makes age a significant difference. The Manova test assumptions were most likely not met because when testing the multivariate normality was not met. The p values were each less than .05, meaning this assumption was rejected.</p>
+<pre class="r"><code>h0&lt;- mean(KosteckiDillon[KosteckiDillon$headache==&quot;yes&quot;,]$age) -                    
+    mean(KosteckiDillon[KosteckiDillon$headache==&quot;no&quot;,]$age)
+mean_diff&lt;-vector()
+for(i in 1:5000){    
+  boot &lt;- KosteckiDillon %&gt;% sample_frac(replace = T) 
+  mean_diff[i] &lt;- mean(boot[boot$headache==&quot;yes&quot;,]$age) -                    
+    mean(boot[boot$headache==&quot;no&quot;,]$age)
+} 
+mean(mean_diff)</code></pre>
+<pre><code>## [1] -1.371817</code></pre>
+<pre class="r"><code>mean(h0)</code></pre>
+<pre><code>## [1] -1.37735</code></pre>
+<pre class="r"><code>ggplot(KosteckiDillon,aes(age,fill=headache))+geom_histogram(bins=6.5)+  facet_wrap(~headache,ncol=2)+theme(legend.position=&quot;none&quot;)</code></pre>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>KosteckiDillon %&gt;% group_by(headache) %&gt;% summarize(m = mean(age)) %&gt;% 
+    summarize(diff(m))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `diff(m)`
+##       &lt;dbl&gt;
+## 1     -1.38</code></pre>
+<pre class="r"><code>mean(mean_diff &gt; 1.37735 | mean_diff &lt; -1.37735)</code></pre>
+<pre><code>## [1] 0.4948</code></pre>
+<p>The null hypothesis is that the mean difference for ages is the same for those who feel a headache and those that do not. The alternative hypothesis is that the mean difference for ages are not the same for those that feel headaches and those that do not. The p-value was 0.4862, so we failed to reject the null hothesis. The mean difference of the sample was -1.37735. The mean difference after making a random sample was -1.368408 but according to the p-value this difference was not significant. The p-value was 0.4862.</p>
+<pre class="r"><code>library(tidyverse)
+library(lmtest)
+library(sandwich)
+KosteckiDillon$age_m &lt;- KosteckiDillon$age - mean(KosteckiDillon$age, na.rm = T)
+fit&lt;-lm(airq~headache*age_m, data=KosteckiDillon)
+summary(fit)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = airq ~ headache * age_m, data =
+KosteckiDillon)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -20.992 -6.834 -0.862 4.160 48.027
+##
+## Coefficients:
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 24.67747 0.24767 99.639 &lt;2e-16 ***
+## headacheyes 0.25417 0.30879 0.823 0.4105
+## age_m -0.03889 0.02360 -1.648 0.0994 .
+## headacheyes:age_m 0.04630 0.02847 1.626 0.1040
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 9.513 on 4148 degrees of
+freedom
+## Multiple R-squared: 0.0009125, Adjusted R-squared:
+0.0001899
+## F-statistic: 1.263 on 3 and 4148 DF, p-value: 0.2854</code></pre>
+<pre class="r"><code>ggplot(KosteckiDillon, aes(x = age_m, y = airq, group = headache)) + 
+    geom_point(aes(color = headache)) + geom_smooth(method = &quot;lm&quot;, 
+    aes(color = headache))</code></pre>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>resids&lt;-fit$residuals
+fitvals&lt;-fit$fitted.values
+ggplot()+geom_point(aes(fitvals,resids))+geom_hline(yintercept=0, color=&#39;red&#39;)</code></pre>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot()+geom_histogram(aes(resids), bins=20)</code></pre>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-4-3.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>shapiro.test(resids)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  resids
+## W = 0.93966, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>coeftest(fit, vcov = vcovHC(fit))</code></pre>
+<pre><code>##
+## t test of coefficients:
+##
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 24.677465 0.235496 104.7891 &lt; 2e-16 ***
+## headacheyes 0.254170 0.302375 0.8406 0.40063
+## age_m -0.038893 0.021972 -1.7701 0.07678 .
+## headacheyes:age_m 0.046303 0.027508 1.6833 0.09240 .
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<p>The intercept is the predicted air quality for an average aged person with no headache which is 24.677. Headacheyes is when controlling for age, air quality for those that had a headache was 0.254 higher than those that said they did nto have a headache. As for age_m, it is when there is no headache, there is a decrease of 0.039 oof airquality for every one unit increase in age on average. As for headacheyes*age_m, the slope for age on airquality is 0.0463 higher for those that experience having a headache comared to those that did not have a headache. The linearity and homoskedsaticity seemed normal but the normality did not look normal, so it did not pass the test. When doing robust standard errors, the coefficients did not change. This means that the homoskedacity was met by this model because the robust SEs do not violate homoskedacity. The standard errors did not change much and the p-values showed that the intercept was still the onl significant value. The adjusted r-squared is 0.0002.</p>
+<pre class="r"><code>samp&lt;-replicate(5000,{ 
+  boot&lt;-sample_frac(KosteckiDillon,replace=T)    
+  fit&lt;-lm(airq~headache*age_m, data=boot)     
+  coef(fit) 
+  })
+samp %&gt;% t %&gt;% as.data.frame %&gt;% summarize_all(sd)</code></pre>
+<pre><code>##   (Intercept) headacheyes     age_m headacheyes:age_m
+## 1    0.235282    0.303242 0.0220545        0.02758478</code></pre>
+<p>When comparing the bootstrap standard errors to the robust standard errors, they are very similar. They differ by around 0.001 in some and a little more in others. The robust standard errors are onl a bit higher than the bootstrapped standard errors.</p>
+<pre class="r"><code>Kostecki1&lt;-KosteckiDillon%&gt;%mutate(headache2=ifelse(headache==&quot;yes&quot;,1,0))
+head(Kostecki1)</code></pre>
+<pre><code>## id time dos hatype age airq medication headache sex
+age_m headache2
+## 1 1 -11 753 Aura 30 9 continuing yes female -12.36392 1
+## 2 1 -10 754 Aura 30 7 continuing yes female -12.36392 1
+## 3 1 -9 755 Aura 30 10 continuing yes female -12.36392 1
+## 4 1 -8 756 Aura 30 13 continuing yes female -12.36392 1
+## 5 1 -7 757 Aura 30 18 continuing yes female -12.36392 1
+## 6 1 -6 758 Aura 30 19 continuing yes female -12.36392 1</code></pre>
+<pre class="r"><code>fit1 &lt;- glm(headache2 ~ medication+age, data=Kostecki1, family=binomial(link=&quot;logit&quot;))
+summary(fit1)</code></pre>
+<pre><code>##
+## Call:
+## glm(formula = headache2 ~ medication + age, family =
+binomial(link = &quot;logit&quot;),
+## data = Kostecki1)
+##
+## Deviance Residuals:
+## Min 1Q Median 3Q Max
+## -1.8467 -1.3333 0.7690 0.9312 1.3860
+##
+## Coefficients:
+## Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) 0.317475 0.145782 2.178 0.0294 *
+## medicationreduced 1.505339 0.105499 14.269 &lt; 2e-16 ***
+## medicationcontinuing 0.877078 0.084038 10.437 &lt; 2e-16
+***
+## age -0.013258 0.003001 -4.418 9.97e-06 ***
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## (Dispersion parameter for binomial family taken to be 1)
+##
+## Null deviance: 5415.9 on 4151 degrees of freedom
+## Residual deviance: 5180.8 on 4148 degrees of freedom
+## AIC: 5188.8
+##
+## Number of Fisher Scoring iterations: 4</code></pre>
+<pre class="r"><code>prob &lt;- predict(fit1, type = &quot;response&quot;)
+pred &lt;- ifelse(prob &gt; 0.5, 1, 0)
+table(prediction = pred, truth = Kostecki1$headache2) %&gt;% addmargins</code></pre>
+<pre><code>##           truth
+## prediction    0    1  Sum
+##        0    414  310  724
+##        1   1072 2356 3428
+##        Sum 1486 2666 4152</code></pre>
+<pre class="r"><code>#accuracy
+(414+2356)/4152</code></pre>
+<pre><code>## [1] 0.6671484</code></pre>
+<pre class="r"><code>#tnr
+2356/3428</code></pre>
+<pre><code>## [1] 0.6872812</code></pre>
+<pre class="r"><code>#tpr
+414/724</code></pre>
+<pre><code>## [1] 0.5718232</code></pre>
+<pre class="r"><code>#ppv
+414/1486</code></pre>
+<pre><code>## [1] 0.2786003</code></pre>
+<pre class="r"><code>Kostecki1$prob &lt;- predict(fit1, newdata = Kostecki1, 
+    type = &quot;response&quot;)
+kostecki2 &lt;- Kostecki1 %&gt;% mutate(headache3 = as.factor(Kostecki1$headache2))
+ggplot(kostecki2, aes(prob , fill=headache3)) + 
+    geom_density(alpha=.3)</code></pre>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>library(plotROC)
+ROCplot &lt;- ggplot(Kostecki1) + geom_roc(aes(d = headache2, 
+    m = prob), n.cuts = 0)
+ROCplot</code></pre>
+<p><img src="../../project/project2_files/figure-html/unnamed-chunk-6-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>calc_auc(ROCplot)</code></pre>
+<pre><code>##   PANEL group       AUC
+## 1     1    -1 0.6333317</code></pre>
+<p>The intercept is the odds of having a headache for a middleaged person with continuing medication and it is 1.195. The medication none is when controlling for age, the odds of having a headache is 0.877 times less than the odds of having a headache while continuing medication. The medication reduced is when controlling for age, the odds of having a headache is 0.628 times more than the odds of having a headache while continuing the medication. Age is when controlling for medication, the odds of having a headache is 0.013 times less for ages other than those of middleage. The accuracy is 0.6671484. The specificity is 0.6872812. The sensitivity is 0.5718232. The precision is 0.2786003. The AUC is 0.633 which is poor. This is a really bad plot since it is pretty close to a straight line, meaning it is a random classifier.</p>
+<pre class="r"><code>library(glmnet)
+class_diag &lt;- function(probs,truth){
+  tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)  
+  acc=sum(diag(tab))/sum(tab)  
+  sens=tab[2,2]/colSums(tab)[2]  
+  spec=tab[1,1]/colSums(tab)[1] 
+  ppv=tab[2,2]/rowSums(tab)[2]  
+  f1=2*(sens*ppv)/(sens+ppv)
+  if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+  ord&lt;-order(probs, decreasing=TRUE)  
+  probs &lt;- probs[ord]; truth &lt;- truth[ord] 
+  TPR=cumsum(truth)/max(1,sum(truth))  
+  FPR=cumsum(!truth)/max(1,sum(!truth))  
+  dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)  
+  TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)  
+  n &lt;- length(TPR)  
+  auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )  
+  data.frame(acc,sens,spec,ppv,f1,auc)
+}
+fit2&lt;-glm(headache2~.,data=Kostecki1,family=&quot;binomial&quot;)
+coef(fit2)</code></pre>
+<pre><code>## (Intercept) id time dos
+## -2.656607e+01 8.897163e-11 3.421224e-11 -9.732477e-12
+## hatypeMixed hatypeNo Aura age airq
+## 2.679356e-08 -2.585734e-09 3.858819e-09 1.757654e-10
+## medicationreduced medicationcontinuing headacheyes
+sexmale
+## -3.865621e-07 -2.449137e-07 5.313214e+01 -1.082654e-08
+## age_m prob
+## NA 1.164103e-06</code></pre>
+<pre class="r"><code>probs&lt;-predict(fit2,type=&quot;response&quot;) 
+class_diag(probs,Kostecki1$headache2) </code></pre>
+<pre><code>##   acc sens spec ppv f1 auc
+## 1   1    1    1   1  1   1</code></pre>
+<pre class="r"><code>k=10
+data&lt;-Kostecki1[sample(nrow(Kostecki1)),] 
+folds&lt;-cut(seq(1:nrow(Kostecki1)),breaks=k,labels=F) 
+diags&lt;-NULL
+for(i in 1:k){
+  train&lt;-data[folds!=i,]  
+  test&lt;-data[folds==i,]  
+  truth&lt;-test$headache2 
+  fit&lt;-glm(headache2~.,data=Kostecki1,family=&quot;binomial&quot;)
+  probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+  diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+summarize_all(diags,mean)</code></pre>
+<pre><code>##   acc sens spec ppv f1 auc
+## 1   1    1    1   1  1   1</code></pre>
+<pre class="r"><code>y&lt;-as.matrix(Kostecki1$headache2)
+x&lt;-model.matrix(headache2~.,data=Kostecki1)[,-1] 
+cv&lt;-cv.glmnet(x,y,family=&quot;binomial&quot;)
+lasso&lt;-glmnet(x,y,family=&quot;binomial&quot;,lambda=cv$lambda.1se)
+coef(lasso)</code></pre>
+<pre><code>## 14 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                             s0
+## (Intercept)          -7.044751
+## id                    .       
+## time                  .       
+## dos                   .       
+## hatypeMixed           .       
+## hatypeNo Aura         .       
+## age                   .       
+## airq                  .       
+## medicationreduced     .       
+## medicationcontinuing  .       
+## headacheyes          14.674270
+## sexmale               .       
+## age_m                 .       
+## prob                  .</code></pre>
+<pre class="r"><code>k=10
+data&lt;-Kostecki1[sample(nrow(Kostecki1)),] 
+folds&lt;-cut(seq(1:nrow(Kostecki1)),breaks=k,labels=F) 
+diags&lt;-NULL
+for(i in 1:k){
+  train&lt;-data[folds!=i,]  
+  test&lt;-data[folds==i,]  
+  truth&lt;-test$headache2 
+  fit&lt;-glm(headache2~headache,data=Kostecki1,family=&quot;binomial&quot;)
+  probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+  diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+diags%&gt;%summarize_all(mean)</code></pre>
+<pre><code>##   acc sens spec ppv f1 auc
+## 1   1    1    1   1  1   1</code></pre>
+<p>The accuracy, sensitivity, specificity, precision, and AUC are all 1. This either means that they were all really great and the model was perfect or there was an error when computing this. After doing a 10-fold CV with the same sample, I got the accuracy of 0.975, sensitivity of 0.769, specificity of 0.993, pprecision of 0.861, and AUC of 0.983. This is still a really good model and seems more accurate than a perfect score from earlier. Even though the AUC decreased from the in-sample model, it is still really high and is considered great. When doing lasso, only the intercept adn headacheyes were retained. This means that headache yes is the most predictive variable. The AUC after only doing testing the variables on the lasso showed was great at 0.989. This was a little higher than the previous but was still less than the first one, which had an AUC of 1. Overall, I feel this is the most accurate since it is not perfect but is the highest.</p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</div>
+
+            
+        <hr>         <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div> 
+            </div>
+          </div>
+
+   <hr>  <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+        </div>
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../../js/docs.min.js"></script>
+<script src="../../js/main.js"></script>
+
+<script src="../../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
