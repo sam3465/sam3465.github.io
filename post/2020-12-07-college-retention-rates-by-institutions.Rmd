@@ -1,0 +1,12 @@
+---
+title: College Retention Rates by Institutions
+author: 'Samantha Fuentes'
+date: '2020-12-07'
+slug: college-retention-rates-by-institutions
+categories: []
+tags: []
+description: ''
+---
+[Link to project 1](/project/project1/)
+
+[Link to google](https://www.google.com)
