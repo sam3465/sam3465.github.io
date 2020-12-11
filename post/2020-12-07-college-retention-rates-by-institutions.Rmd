@@ -1,5 +1,5 @@
 ---
-title: College Retention Rates by Institutions
+title: Importance of Python
 author: 'Samantha Fuentes'
 date: '2020-12-07'
 slug: college-retention-rates-by-institutions
@@ -7,6 +7,20 @@ categories: []
 tags: []
 description: ''
 ---
-[Link to project 1](/project/project1/)
+<center>
+![](/post/2020-12-07-college-retention-rates-by-institutions_files/moon.jpeg)
+<center>
+When I began taking this class, I was unsure about what I would be learning since I am not really good with coding. Although I still would not consider myself literate in coding, II feel like I learned enough basics to get by. I am really grateful I took this class and have been able to create something as cool as my own website. 
 
-[Link to google](https://www.google.com)
+```{r}
+library(reticulate)
+hist(iris$Sepal.Length, xlab="Sepal Length (cm)", main= "Distribution of Iris Sepal Length", right = F, col = "blue")
+"This blog has been"-> rcode
+```
+
+
+```{python}
+pyth= "great fun"
+print(r.rcode,pyth)
+```
+
