@@ -13,7 +13,7 @@
       <pubDate>Mon, 07 Dec 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/2020/12/07/college-retention-rates-by-institutions/</guid>
-      <description>When I began taking this class, I was unsure about what I would be learning since I am not really good with coding. Although I still would not consider myself literate in coding, II feel like I learned enough basics to get by. I am really grateful I took this class and have been able to create something as cool as my own website.
+      <description>When I began taking this class, I was unsure about what I would be learning since I am not really good with coding. Although I still would not consider myself literate in coding, I feel like I learned enough basics to get by. I am really grateful I took this class and have been able to create something as cool as my own website.
 library(reticulate) hist(iris$Sepal.Length, xlab=&amp;quot;Sepal Length (cm)&amp;quot;, main= &amp;quot;Distribution of Iris Sepal Length&amp;quot;, right = F, col = &amp;quot;blue&amp;quot;) &amp;quot;This blog has been&amp;quot;-&amp;gt; rcode pyth= &amp;quot;great fun&amp;quot; print(r.</description>
     </item>
     
